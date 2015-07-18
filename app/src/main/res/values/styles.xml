@@ -1,0 +1,11 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_large">12dp</dimen>
+
+</resources>

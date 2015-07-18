@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/black"
+    tools:context="com.android.battleship.SetupActivity">
+
+    <TextView
+        android:id="@+id/setup_tv1"
+        android:layout_weight="1"
+        android:layout_marginBottom="20dp"
+        android:text="@string/setup_instructions"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <GridView
+        android:id="@+id/setup_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:stretchMode="columnWidth"
+        android:background="@android:color/black"
+        android:horizontalSpacing="1dp"
+        android:numColumns="10"  >
+
+
+    </GridView>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:padding="@dimen/padding_medium"
+            android:id="@+id/buttonRotate"
+            android:text="@string/button_rotate"
+            android:background="@drawable/shape"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:padding="@dimen/padding_medium"
+            android:id="@+id/buttonFire"
+            android:text="@string/button_fire"
+            android:background="@drawable/shape"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+<!-- From: file:/home/srandall/AndroidStudioProjects/Battleship/app/src/main/res/layout/activity_setup.xml -->
