@@ -1,5 +1,32 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/fragment"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_main"
     android:name="com.android.battleship.MainActivity"
-    tools:layout="@layout/fragment_player1" android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    tools:layout="@layout/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/select_game"
+        />
+
+
+    <Button
+        android:id="@+id/button_1p"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+    <Button
+        android:id="@+id/button_2p"
+        android:layout_below="@+id/button_1p"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+
+    </RelativeLayout>

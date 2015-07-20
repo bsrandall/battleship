@@ -1,6 +1,7 @@
 package com.android.battleship;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -27,9 +28,10 @@ public class SetupActivity extends Activity {
     protected GridView boardGrid;
 
     protected Button buttonRotate;
-    protected Button buttonFire;
+    protected Button buttonStart;
 
-    private Ship[] ships;
+    private Ship[] player1Ships;
+    private Ship[] player2Ships;
 
     private static final String TAG = SetupActivity.class.getSimpleName();
 
@@ -37,38 +39,43 @@ public class SetupActivity extends Activity {
 
     private int clickedShipNumber, lastClickedShipNumber;
 
+    boolean playComputer = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        playComputer = intent.getBooleanExtra("playComputer", true);
 
         lastClickWasShip = false;
         clickedShipNumber = -1;
         lastClickedShipNumber = 0;
 
 
-        ships = new Ship[4];
+        player1Ships = new Ship[4];
         for (int i = 0; i < 4; ++i) {
-            ships[i] = new Ship(i + 2);
+            player1Ships[i] = new Ship(i + 2);
         }
 
-        randomizeShips();
+        randomizeShips(player1Ships);
 
-        displayGameScreen();
+        displayArrangeGameScreen();
         attachActionListeners();
 
     }
 
 
 
-    protected void displayGameScreen(){
+    protected void displayArrangeGameScreen(){
         setContentView(R.layout.activity_setup);
 
         buttonRotate = (Button) findViewById(R.id.buttonRotate);
-        buttonFire = (Button) findViewById(R.id.buttonFire);
+        buttonStart = (Button) findViewById(R.id.buttonPlayGame);
 
         boardGrid = (GridView) findViewById(R.id.setup_gridview);
 
-        imageAdapter = new ImageAdapter(this, this.ships);
+        imageAdapter = new ImageAdapter(this, this.player1Ships);
         boardGrid.setAdapter(imageAdapter);
 
     }
@@ -76,11 +83,11 @@ public class SetupActivity extends Activity {
     private void attachActionListeners(){
 
 
-        buttonFire.setOnClickListener(new View.OnClickListener(){
+        buttonStart.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 buttonRotate.setEnabled(false);
-                executeFire();
+                player1Ready();
             }
         });
 
@@ -102,9 +109,9 @@ public class SetupActivity extends Activity {
                     if (lastClickWasShip) {  // If a Ship was previous ImageView clicked
                         // we know the ship number that was clicked. We now know board position clicked
                         boolean valid = true;
-                        for (int i = 0; i < ships.length; ++i) {
+                        for (int i = 0; i < player1Ships.length; ++i) {
                             if (i != lastClickedShipNumber) {
-                                valid = shipNoConflicts(ships[lastClickedShipNumber].getDirection(), position, ships[lastClickedShipNumber].getLength(), ships[i].getCoordinates());
+                                valid = shipNoConflicts(player1Ships[lastClickedShipNumber].getDirection(), position, player1Ships[lastClickedShipNumber].getLength(), player1Ships[i].getCoordinates());
                                 if (valid == false)
                                     break;
 
@@ -112,8 +119,8 @@ public class SetupActivity extends Activity {
                         }
 
                         if (valid == true) {
-                            if (shipWillFit(ships[lastClickedShipNumber].getDirection(), position,
-                                    ships[lastClickedShipNumber].getLength())) {
+                            if (shipWillFit(player1Ships[lastClickedShipNumber].getDirection(), position,
+                                    player1Ships[lastClickedShipNumber].getLength())) {
 
                                 redrawShip(position, lastClickedShipNumber);
 
@@ -139,25 +146,48 @@ public class SetupActivity extends Activity {
 
     }
 
-    private void executeFire(){
-        int random = r.nextInt(99);
-        int hitShip =  isShip(random);
-        if (hitShip == -1)
-            Ship.setMiss(random);
-        else
-            ships[hitShip].setHit(random);
+    private void player1Ready(){
+
+        if (playComputer == false) {
+
+            // look for connection via bluetooth
+            // must negotiate who is server and who is client
+
+        }
+
+        else {   // play Computer is true. Create a random ship for computer.
+
+            player2Ships = new Ship[4];
+            for (int i = 0; i < 4; ++i) {
+                player2Ships[i] = new Ship(i + 2);
+            }
+
+            randomizeShips(player2Ships);
+
+            Intent intent = new Intent(this.getApplicationContext(), PlayComputerActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("player1Ships", player1Ships);
+            bundle.putSerializable("player2Ships", player2Ships);
+            intent.putExtras(bundle);
+            startActivity(intent);
+
+        }
+
+
+
+
 
         imageAdapter.notifyDataSetChanged();
     }
 
-    public void randomizeShips() {
+    public void randomizeShips(Ship[] ships) {
 
         for (int shipCount = 0; shipCount < ships.length; ++shipCount)
             ships[shipCount].clearCoordinates();
 
         for (int shipCount = 0; shipCount < ships.length; ++shipCount) {
             int direction = r.nextInt(2);
-            this.ships[shipCount].setDirection(direction);
+            ships[shipCount].setDirection(direction);
             int randomStartPosition = r.nextInt(99);
             boolean valid = false;
             while (valid == false) {
@@ -247,10 +277,10 @@ public class SetupActivity extends Activity {
     public int isShip(int position) {
         int shipNumber = -1;
 
-        for (int shipCount = 0; shipCount < ships.length; ++shipCount) {
+        for (int shipCount = 0; shipCount < player1Ships.length; ++shipCount) {
 
-            ArrayList<Integer> coordinates = new ArrayList<>(this.ships[shipCount].getLength());
-            coordinates = this.ships[shipCount].getCoordinates();
+            ArrayList<Integer> coordinates = new ArrayList<>(this.player1Ships[shipCount].getLength());
+            coordinates = this.player1Ships[shipCount].getCoordinates();
 
             if (coordinates.indexOf(position) != -1) {
                 shipNumber = shipCount;
@@ -264,7 +294,7 @@ public class SetupActivity extends Activity {
 
     public void rotateShip(int shipNumber) {
         boolean valid = true;
-        int oldDirection = this.ships[shipNumber].getDirection();
+        int oldDirection = this.player1Ships[shipNumber].getDirection();
         int newDirection;
         if (oldDirection == 0)
             newDirection = 1;
@@ -275,14 +305,14 @@ public class SetupActivity extends Activity {
         for (int i = 0; i < 2; ++ i) {   // take current startPosition and try adding from 0 to 2 to see if it will rotate
 
 
-            if ( shipWillFit(newDirection, this.ships[shipNumber].getStartPosition() + i,
-                    this.ships[shipNumber].getLength())) {
+            if ( shipWillFit(newDirection, this.player1Ships[shipNumber].getStartPosition() + i,
+                    this.player1Ships[shipNumber].getLength())) {
 
-                for (int j = 0; j < ships.length; ++j) {   // if it will fit at startPosition + i
+                for (int j = 0; j < player1Ships.length; ++j) {   // if it will fit at startPosition + i
 
                     if (j != shipNumber) {  // Do not check the ship you are trying to rotate
-                        valid = shipNoConflicts(newDirection, this.ships[shipNumber].getStartPosition() + i,
-                                this.ships[shipNumber].getLength(), this.ships[j].getCoordinates());
+                        valid = shipNoConflicts(newDirection, this.player1Ships[shipNumber].getStartPosition() + i,
+                                this.player1Ships[shipNumber].getLength(), this.player1Ships[j].getCoordinates());
                         if (valid == false) {
 
                             break;
@@ -292,8 +322,8 @@ public class SetupActivity extends Activity {
 
                 if (valid == true) {
 
-                    this.ships[shipNumber].setDirection(newDirection);
-                    redrawShip(this.ships[shipNumber].getStartPosition(), shipNumber);
+                    this.player1Ships[shipNumber].setDirection(newDirection);
+                    redrawShip(this.player1Ships[shipNumber].getStartPosition(), shipNumber);
                     break;
                 }
 
@@ -312,28 +342,28 @@ public class SetupActivity extends Activity {
 
         int imageResource = R.drawable.white;
 
-        ArrayList<Integer> oldCoordinates = new ArrayList<>(this.ships[shipNumber].getLength());
+        ArrayList<Integer> oldCoordinates = new ArrayList<>(this.player1Ships[shipNumber].getLength());
 
-        ArrayList<Integer> newCoordinates = new ArrayList<>(this.ships[shipNumber].getLength());
+        ArrayList<Integer> newCoordinates = new ArrayList<>(this.player1Ships[shipNumber].getLength());
 
-        oldCoordinates = this.ships[shipNumber].getCoordinates();
+        oldCoordinates = this.player1Ships[shipNumber].getCoordinates();
 
-        if (ships[shipNumber].getDirection() == 0) {
+        if (player1Ships[shipNumber].getDirection() == 0) {
 
-            for (int i = 0; i < ships[shipNumber].getLength(); ++i) {
+            for (int i = 0; i < player1Ships[shipNumber].getLength(); ++i) {
                 newCoordinates.add(position + i);
             }
 
         }
 
         else {
-            for (int i = 0; i < ships[shipNumber].getLength(); ++i) {
+            for (int i = 0; i < player1Ships[shipNumber].getLength(); ++i) {
                 newCoordinates.add(position + (i * 10));
             }
 
         }
 
-        ships[shipNumber].setCoordinates(newCoordinates);
+        player1Ships[shipNumber].setCoordinates(newCoordinates);
 
 
         imageAdapter.notifyDataSetChanged();

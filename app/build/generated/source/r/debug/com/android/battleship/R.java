@@ -1558,14 +1558,16 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0c003d;
         public static final int action_mode_bar_stub=0x7f0c003c;
         public static final int action_mode_close_button=0x7f0c0025;
-        public static final int action_settings=0x7f0c0054;
+        public static final int action_settings=0x7f0c0058;
         public static final int activity_chooser_view_content=0x7f0c0026;
         public static final int alertTitle=0x7f0c0030;
         public static final int always=0x7f0c0016;
         public static final int beginning=0x7f0c0013;
-        public static final int buttonFire=0x7f0c0053;
         public static final int buttonPanel=0x7f0c0036;
-        public static final int buttonRotate=0x7f0c0052;
+        public static final int buttonPlayGame=0x7f0c0057;
+        public static final int buttonRotate=0x7f0c0056;
+        public static final int button_1p=0x7f0c0050;
+        public static final int button_2p=0x7f0c0051;
         public static final int checkbox=0x7f0c0038;
         public static final int collapseActionView=0x7f0c0017;
         public static final int contentPanel=0x7f0c0031;
@@ -1580,12 +1582,12 @@ containing a value of this type.
         public static final int end=0x7f0c0014;
         public static final int expand_activities_button=0x7f0c0027;
         public static final int expanded_menu=0x7f0c0037;
-        public static final int fragment=0x7f0c004f;
         public static final int home=0x7f0c0004;
         public static final int homeAsUp=0x7f0c000d;
         public static final int icon=0x7f0c002b;
         public static final int ifRoom=0x7f0c0018;
         public static final int image=0x7f0c0028;
+        public static final int layout_main=0x7f0c004f;
         public static final int listMode=0x7f0c0009;
         public static final int list_item=0x7f0c002a;
         public static final int middle=0x7f0c0015;
@@ -1594,6 +1596,8 @@ containing a value of this type.
         public static final int none=0x7f0c000e;
         public static final int normal=0x7f0c000a;
         public static final int parentPanel=0x7f0c002d;
+        public static final int play_tv1=0x7f0c0052;
+        public static final int play_tv2=0x7f0c0054;
         public static final int progress_circular=0x7f0c0005;
         public static final int progress_horizontal=0x7f0c0006;
         public static final int radio=0x7f0c003a;
@@ -1610,8 +1614,8 @@ containing a value of this type.
         public static final int search_src_text=0x7f0c0049;
         public static final int search_voice_btn=0x7f0c004d;
         public static final int select_dialog_listview=0x7f0c004e;
-        public static final int setup_gridview=0x7f0c0051;
-        public static final int setup_tv1=0x7f0c0050;
+        public static final int setup_gridview=0x7f0c0053;
+        public static final int setup_tv1=0x7f0c0055;
         public static final int shortcut=0x7f0c0039;
         public static final int showCustom=0x7f0c000f;
         public static final int showHome=0x7f0c0010;
@@ -1663,8 +1667,8 @@ containing a value of this type.
         public static final int abc_select_dialog_material=0x7f040017;
         public static final int abc_simple_dropdown_hint=0x7f040018;
         public static final int activity_main=0x7f040019;
-        public static final int activity_setup=0x7f04001a;
-        public static final int fragment_player1=0x7f04001b;
+        public static final int activity_play_computer=0x7f04001a;
+        public static final int activity_setup=0x7f04001b;
         public static final int select_dialog_item_material=0x7f04001c;
         public static final int select_dialog_multichoice_material=0x7f04001d;
         public static final int select_dialog_singlechoice_material=0x7f04001e;
@@ -1672,7 +1676,8 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int menu_main=0x7f0d0000;
-        public static final int menu_setup=0x7f0d0001;
+        public static final int menu_play_computer=0x7f0d0001;
+        public static final int menu_setup=0x7f0d0002;
     }
     public static final class mipmap {
         public static final int ic_launcher=0x7f030000;
@@ -1697,11 +1702,13 @@ containing a value of this type.
         public static final int abc_toolbar_collapse_description=0x7f060010;
         public static final int action_settings=0x7f060011;
         public static final int app_name=0x7f060012;
-        public static final int button_fire=0x7f060013;
+        public static final int button_play_game=0x7f060013;
         public static final int button_rotate=0x7f060014;
-        public static final int hello_world=0x7f060015;
-        public static final int setup_instructions=0x7f060016;
-        public static final int title_activity_setup=0x7f060017;
+        public static final int make_move=0x7f060015;
+        public static final int select_game=0x7f060016;
+        public static final int setup_instructions=0x7f060017;
+        public static final int title_activity_play_computer=0x7f060018;
+        public static final int title_activity_setup=0x7f060019;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f08006b;

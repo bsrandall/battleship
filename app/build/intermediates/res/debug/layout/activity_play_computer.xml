@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/black"
+    tools:context="com.android.battleship.SetupActivity">
+
+    <TextView
+        android:id="@+id/play_tv1"
+        android:layout_weight="1"
+        android:layout_marginBottom="20dp"
+        android:text="@string/make_move"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <GridView
+            android:id="@+id/setup_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:stretchMode="columnWidth"
+            android:background="@android:color/black"
+            android:horizontalSpacing="1dp"
+            android:numColumns="10"  >
+
+
+        </GridView>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/play_tv2"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
+<!-- From: file:/home/srandall/AndroidStudioProjects/Battleship/app/src/main/res/layout/activity_play_computer.xml -->
